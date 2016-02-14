@@ -1,0 +1,701 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head profile="http://www.w3.org/2006/03/hcard http://dublincore.org/documents/2008/08/04/dc-html/">
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+
+  <title>Short Message Chess Game Protocol</title>
+
+  <style type="text/css" title="Xml2Rfc (sans serif)">
+  /*<![CDATA[*/
+	  a {
+	  text-decoration: none;
+	  }
+      /* info code from SantaKlauss at http://www.madaboutstyle.com/tooltip2.html */
+      a.info {
+          /* This is the key. */
+          position: relative;
+          z-index: 24;
+          text-decoration: none;
+      }
+      a.info:hover {
+          z-index: 25;
+          color: #FFF; background-color: #900;
+      }
+      a.info span { display: none; }
+      a.info:hover span.info {
+          /* The span will display just on :hover state. */
+          display: block;
+          position: absolute;
+          font-size: smaller;
+          top: 2em; left: -5em; width: 15em;
+          padding: 2px; border: 1px solid #333;
+          color: #900; background-color: #EEE;
+          text-align: left;
+      }
+	  a.smpl {
+	  color: black;
+	  }
+	  a:hover {
+	  text-decoration: underline;
+	  }
+	  a:active {
+	  text-decoration: underline;
+	  }
+	  address {
+	  margin-top: 1em;
+	  margin-left: 2em;
+	  font-style: normal;
+	  }
+	  body {
+	  color: black;
+	  font-family: verdana, helvetica, arial, sans-serif;
+	  font-size: 10pt;
+	  max-width: 55em;
+	  
+	  }
+	  cite {
+	  font-style: normal;
+	  }
+	  dd {
+	  margin-right: 2em;
+	  }
+	  dl {
+	  margin-left: 2em;
+	  }
+	
+	  ul.empty {
+	  list-style-type: none;
+	  }
+	  ul.empty li {
+	  margin-top: .5em;
+	  }
+	  dl p {
+	  margin-left: 0em;
+	  }
+	  dt {
+	  margin-top: .5em;
+	  }
+	  h1 {
+	  font-size: 14pt;
+	  line-height: 21pt;
+	  page-break-after: avoid;
+	  }
+	  h1.np {
+	  page-break-before: always;
+	  }
+	  h1 a {
+	  color: #333333;
+	  }
+	  h2 {
+	  font-size: 12pt;
+	  line-height: 15pt;
+	  page-break-after: avoid;
+	  }
+	  h3, h4, h5, h6 {
+	  font-size: 10pt;
+	  page-break-after: avoid;
+	  }
+	  h2 a, h3 a, h4 a, h5 a, h6 a {
+	  color: black;
+	  }
+	  img {
+	  margin-left: 3em;
+	  }
+	  li {
+	  margin-left: 2em;
+	  margin-right: 2em;
+	  }
+	  ol {
+	  margin-left: 2em;
+	  margin-right: 2em;
+	  }
+	  ol p {
+	  margin-left: 0em;
+	  }
+	  p {
+	  margin-left: 2em;
+	  margin-right: 2em;
+	  }
+	  pre {
+	  margin-left: 3em;
+	  background-color: lightyellow;
+	  padding: .25em;
+	  }
+	  pre.text2 {
+	  border-style: dotted;
+	  border-width: 1px;
+	  background-color: #f0f0f0;
+	  width: 69em;
+	  }
+	  pre.inline {
+	  background-color: white;
+	  padding: 0em;
+	  }
+	  pre.text {
+	  border-style: dotted;
+	  border-width: 1px;
+	  background-color: #f8f8f8;
+	  width: 69em;
+	  }
+	  pre.drawing {
+	  border-style: solid;
+	  border-width: 1px;
+	  background-color: #f8f8f8;
+	  padding: 2em;
+	  }
+	  table {
+	  margin-left: 2em;
+	  }
+	  table.tt {
+	  vertical-align: top;
+	  }
+	  table.full {
+	  border-style: outset;
+	  border-width: 1px;
+	  }
+	  table.headers {
+	  border-style: outset;
+	  border-width: 1px;
+	  }
+	  table.tt td {
+	  vertical-align: top;
+	  }
+	  table.full td {
+	  border-style: inset;
+	  border-width: 1px;
+	  }
+	  table.tt th {
+	  vertical-align: top;
+	  }
+	  table.full th {
+	  border-style: inset;
+	  border-width: 1px;
+	  }
+	  table.headers th {
+	  border-style: none none inset none;
+	  border-width: 1px;
+	  }
+	  table.left {
+	  margin-right: auto;
+	  }
+	  table.right {
+	  margin-left: auto;
+	  }
+	  table.center {
+	  margin-left: auto;
+	  margin-right: auto;
+	  }
+	  caption {
+	  caption-side: bottom;
+	  font-weight: bold;
+	  font-size: 9pt;
+	  margin-top: .5em;
+	  }
+	
+	  table.header {
+	  border-spacing: 1px;
+	  width: 95%;
+	  font-size: 10pt;
+	  color: white;
+	  }
+	  td.top {
+	  vertical-align: top;
+	  }
+	  td.topnowrap {
+	  vertical-align: top;
+	  white-space: nowrap; 
+	  }
+	  table.header td {
+	  background-color: gray;
+	  width: 50%;
+	  }
+	  table.header a {
+	  color: white;
+	  }
+	  td.reference {
+	  vertical-align: top;
+	  white-space: nowrap;
+	  padding-right: 1em;
+	  }
+	  thead {
+	  display:table-header-group;
+	  }
+	  ul.toc, ul.toc ul {
+	  list-style: none;
+	  margin-left: 1.5em;
+	  margin-right: 0em;
+	  padding-left: 0em;
+	  }
+	  ul.toc li {
+	  line-height: 150%;
+	  font-weight: bold;
+	  font-size: 10pt;
+	  margin-left: 0em;
+	  margin-right: 0em;
+	  }
+	  ul.toc li li {
+	  line-height: normal;
+	  font-weight: normal;
+	  font-size: 9pt;
+	  margin-left: 0em;
+	  margin-right: 0em;
+	  }
+	  li.excluded {
+	  font-size: 0pt;
+	  }
+	  ul p {
+	  margin-left: 0em;
+	  }
+	
+	  .comment {
+	  background-color: yellow;
+	  }
+	  .center {
+	  text-align: center;
+	  }
+	  .error {
+	  color: red;
+	  font-style: italic;
+	  font-weight: bold;
+	  }
+	  .figure {
+	  font-weight: bold;
+	  text-align: center;
+	  font-size: 9pt;
+	  }
+	  .filename {
+	  color: #333333;
+	  font-weight: bold;
+	  font-size: 12pt;
+	  line-height: 21pt;
+	  text-align: center;
+	  }
+	  .fn {
+	  font-weight: bold;
+	  }
+	  .hidden {
+	  display: none;
+	  }
+	  .left {
+	  text-align: left;
+	  }
+	  .right {
+	  text-align: right;
+	  }
+	  .title {
+	  color: #990000;
+	  font-size: 18pt;
+	  line-height: 18pt;
+	  font-weight: bold;
+	  text-align: center;
+	  margin-top: 36pt;
+	  }
+	  .vcardline {
+	  display: block;
+	  }
+	  .warning {
+	  font-size: 14pt;
+	  background-color: yellow;
+	  }
+	
+	
+	  @media print {
+	  .noprint {
+		display: none;
+	  }
+	
+	  a {
+		color: black;
+		text-decoration: none;
+	  }
+	
+	  table.header {
+		width: 90%;
+	  }
+	
+	  td.header {
+		width: 50%;
+		color: black;
+		background-color: white;
+		vertical-align: top;
+		font-size: 12pt;
+	  }
+	
+	  ul.toc a::after {
+		content: leader('.') target-counter(attr(href), page);
+	  }
+	
+	  ul.ind li li a {
+		content: target-counter(attr(href), page);
+	  }
+	
+	  .print2col {
+		column-count: 2;
+		-moz-column-count: 2;
+		column-fill: auto;
+	  }
+	  }
+	
+	  @page {
+	  @top-left {
+		   content: "Internet-Draft"; 
+	  } 
+	  @top-right {
+		   content: "December 2010"; 
+	  } 
+	  @top-center {
+		   content: "Abbreviated Title";
+	  } 
+	  @bottom-left {
+		   content: "Doe"; 
+	  } 
+	  @bottom-center {
+		   content: "Expires June 2011"; 
+	  } 
+	  @bottom-right {
+		   content: "[Page " counter(page) "]"; 
+	  } 
+	  }
+	
+	  @page:first { 
+		@top-left {
+		  content: normal;
+		}
+		@top-right {
+		  content: normal;
+		}
+		@top-center {
+		  content: normal;
+		}
+	  }
+  /*]]>*/
+  </style>
+
+  <link href="#rfc.toc" rel="Contents"/>
+<link href="#rfc.section.1" rel="Chapter" title="1 Status of this Memo"/>
+<link href="#rfc.section.2" rel="Chapter" title="2 Copyright Notice"/>
+<link href="#rfc.section.3" rel="Chapter" title="3 Introduction"/>
+<link href="#rfc.section.4" rel="Chapter" title="4 Message Format"/>
+<link href="#rfc.section.4.1" rel="Chapter" title="4.1 Basic Layout"/>
+<link href="#rfc.section.4.2" rel="Chapter" title="4.2 Identifier"/>
+<link href="#rfc.section.4.3" rel="Chapter" title="4.3 Action Flags"/>
+<link href="#rfc.section.4.3.1" rel="Chapter" title="4.3.1 CH (Challenge)"/>
+<link href="#rfc.section.4.3.2" rel="Chapter" title="4.3.2 CA (Challenge Accepted)"/>
+<link href="#rfc.section.4.3.3" rel="Chapter" title="4.3.3 AA (Acceptance Acknowledged)"/>
+<link href="#rfc.section.4.3.4" rel="Chapter" title="4.3.4 MV (Move)"/>
+<link href="#rfc.section.4.3.5" rel="Chapter" title="4.3.5 DR (Draw Request)"/>
+<link href="#rfc.section.4.3.6" rel="Chapter" title="4.3.6 DA (Draw Acknowledge)"/>
+<link href="#rfc.section.4.3.7" rel="Chapter" title="4.3.7 DD (Draw Decline)"/>
+<link href="#rfc.section.4.3.8" rel="Chapter" title="4.3.8 CC (Concede)"/>
+<link href="#rfc.section.4.3.9" rel="Chapter" title="4.3.9 ER (Error)"/>
+<link href="#rfc.section.4.3.10" rel="Chapter" title="4.3.10 RT (Retransmit)"/>
+<link href="#rfc.section.4.3.11" rel="Chapter" title="4.3.11 KI (Kibitz)"/>
+<link href="#rfc.section.4.4" rel="Chapter" title="4.4 Future Expansion"/>
+<link href="#rfc.section.4.5" rel="Chapter" title="4.5 Example Session"/>
+<link href="#rfc.references" rel="Chapter" title="5 Informative References"/>
+<link href="#rfc.authors" rel="Chapter"/>
+
+
+  <meta name="generator" content="xml2rfc version 2.5.1 - http://tools.ietf.org/tools/xml2rfc" />
+  <link rel="schema.dct" href="http://purl.org/dc/terms/" />
+
+  <meta name="dct.creator" content="Parks, M." />
+  <meta name="dct.identifier" content="urn:ietf:id:smcgpv1-draft" />
+  <meta name="dct.issued" scheme="ISO8601" content="2016-2-14" />
+  <meta name="dct.abstract" content="This document describes the Short Message Chess Game Protocol, an application layer protocol based on ASCII text to allow for standardized transmission of chess gameplay over any limited bandwith medium, such as SMS, Twitter, packet radio, or any other protocol where space is at a premium.  " />
+  <meta name="description" content="This document describes the Short Message Chess Game Protocol, an application layer protocol based on ASCII text to allow for standardized transmission of chess gameplay over any limited bandwith medium, such as SMS, Twitter, packet radio, or any other protocol where space is at a premium.  " />
+
+</head>
+
+<body>
+
+  <table class="header">
+    <tbody>
+    
+    	<tr>
+  <td class="left"></td>
+  <td class="right">M. Parks</td>
+</tr>
+<tr>
+  <td class="left"></td>
+  <td class="right">TKWare Enterpises</td>
+</tr>
+<tr>
+  <td class="left"></td>
+  <td class="right">February 14, 2016</td>
+</tr>
+
+    	
+    </tbody>
+  </table>
+
+  <p class="title">Short Message Chess Game Protocol<br />
+  <span class="filename">smcgpv1-draft</span></p>
+  
+  <h1 id="rfc.abstract">
+  <a href="#rfc.abstract">Abstract</a>
+</h1>
+<p>This document describes the Short Message Chess Game Protocol, an application layer protocol based on ASCII text to allow for standardized transmission of chess gameplay over any limited bandwith medium, such as SMS, Twitter, packet radio, or any other protocol where space is at a premium.  </p>
+<p>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED",  "MAY", and "OPTIONAL" in this document are to be interpreted as described in <a href="#RFC2119">[RFC2119]</a>.  </p>
+
+  
+  <hr class="noprint" />
+  <h1 class="np" id="rfc.toc"><a href="#rfc.toc">Table of Contents</a></h1>
+  <ul class="toc">
+
+  	<li>1.   <a href="#rfc.section.1">Status of this Memo</a></li>
+<li>2.   <a href="#rfc.section.2">Copyright Notice</a></li>
+<li>3.   <a href="#rfc.section.3">Introduction</a></li>
+<li>4.   <a href="#rfc.section.4">Message Format</a></li>
+<ul><li>4.1.   <a href="#rfc.section.4.1">Basic Layout</a></li>
+<li>4.2.   <a href="#rfc.section.4.2">Identifier</a></li>
+<li>4.3.   <a href="#rfc.section.4.3">Action Flags</a></li>
+<ul><li>4.3.1.   <a href="#rfc.section.4.3.1">CH (Challenge)</a></li>
+<li>4.3.2.   <a href="#rfc.section.4.3.2">CA (Challenge Accepted)</a></li>
+<li>4.3.3.   <a href="#rfc.section.4.3.3">AA (Acceptance Acknowledged)</a></li>
+<li>4.3.4.   <a href="#rfc.section.4.3.4">MV (Move)</a></li>
+<li>4.3.5.   <a href="#rfc.section.4.3.5">DR (Draw Request)</a></li>
+<li>4.3.6.   <a href="#rfc.section.4.3.6">DA (Draw Acknowledge)</a></li>
+<li>4.3.7.   <a href="#rfc.section.4.3.7">DD (Draw Decline)</a></li>
+<li>4.3.8.   <a href="#rfc.section.4.3.8">CC (Concede)</a></li>
+<li>4.3.9.   <a href="#rfc.section.4.3.9">ER (Error)</a></li>
+<li>4.3.10.   <a href="#rfc.section.4.3.10">RT (Retransmit)</a></li>
+<li>4.3.11.   <a href="#rfc.section.4.3.11">KI (Kibitz)</a></li>
+</ul><li>4.4.   <a href="#rfc.section.4.4">Future Expansion</a></li>
+<li>4.5.   <a href="#rfc.section.4.5">Example Session</a></li>
+</ul><li>5.   <a href="#rfc.references">Informative References</a></li>
+<li><a href="#rfc.authors">Author's Address</a></li>
+
+
+  </ul>
+
+  <h1 id="rfc.section.1"><a href="#rfc.section.1">1.</a> <a href="#status-of-this-memo" id="status-of-this-memo">Status of this Memo</a></h1>
+<p id="rfc.section.1.p.1">This document is not an Internet Standards Track specification; it is published for examination, experimental implementation, and evaluation.  </p>
+<p id="rfc.section.1.p.2">This document defines an Experimental Protocol for the Internet community.  This is a contribution to the RFC Series, independently of any other RFC stream.  The RFC Editor has chosen to publish this document at its discretion and makes no statement about its value for implementation or deployment.  Documents approved for publication by the RFC Editor are not a candidate for any level of Internet Standard; see Section 2 of <a href="#RFC5741">[RFC5741]</a>.  </p>
+<h1 id="rfc.section.2"><a href="#rfc.section.2">2.</a> <a href="#copyright-notice" id="copyright-notice">Copyright Notice</a></h1>
+<p id="rfc.section.2.p.1">Copyright (C) TKWare Enterprises (2014). Some rights reserved; Licensed under the Creative Commons Attribution-Share Alike license.  </p>
+<h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> <a href="#introduction" id="introduction">Introduction</a></h1>
+<p id="rfc.section.3.p.1">Chess, being one of the world's most popular games, has a storied history going back as far as the sixth century. A common pastime is "chess by mail", where individual players would set up a board,  make their moves, write that move down, and mail it to another player.  </p>
+<p id="rfc.section.3.p.2">While innumerable applications of chess over Internet networks exist, this document formalizes a short message protocol intended as a universally applicable spec for long distance chess games over any data network.  </p>
+<h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> <a href="#message-format" id="message-format">Message Format</a></h1>
+<h1 id="rfc.section.4.1"><a href="#rfc.section.4.1">4.1.</a> <a href="#basic-layout" id="basic-layout">Basic Layout</a></h1>
+<p id="rfc.section.4.1.p.1">At a base level, a valid SMCGP message MUST contain the following, each element separated by ASCII colon ":" characters, including the end of the message: </p>
+<p/>
+
+<ol>
+  <li>Six (6) character randomly chosen identifier.</li>
+  <li>Two (2) character action flag.</li>
+  <li>Twenty or less (&lt;=20) character description of the action being taken, the exact format varies by the type of message. Some messages add additional fields.</li>
+  <li>Any number of any other characters to be used for commentary or future expansion. Version 1 of this protocol allows this field to be used for any purpose.</li>
+</ol>
+
+<p> </p>
+<p id="rfc.section.4.1.p.3">In any case, the total length of the SMCGP message MUST NOT exceed fifty (50) bytes.  </p>
+<h1 id="rfc.section.4.2"><a href="#rfc.section.4.2">4.2.</a> <a href="#identifier" id="identifier">Identifier</a></h1>
+<p id="rfc.section.4.2.p.1">The identifier string is composed of six (6) randomly chosen alphanumeric characters of either casing. In other words, it MUST match the regular expression <samp>[A-Za-z0-9]{6}</samp> This allows for 2,176,782,336 unique possible identifiers.  </p>
+<p id="rfc.section.4.2.p.2">A client SHOULD choose these characters at random using a good source of entropy.  </p>
+<p id="rfc.section.4.2.p.3">A client MAY choose to either ignore, or reject with the action flag "ER" any message which: </p>
+<p/>
+
+<ol>
+  <li>Omits the identifier</li>
+  <li>Uses an identifier that is not exactly six (6) characters in length.</li>
+</ol>
+
+<p> </p>
+<p id="rfc.section.4.2.p.5">A client MUST reject with the action flag <samp>ER</samp> any SMCGP message which uses an identifier that is identical to another identifier being used on the same channel, frequency, group message, etc.  </p>
+<p><em>Note</em>: The identifier string MUST NOT be taken to identify a player, it is only used for identifying a conversation. This allows it to be used in broadcast environments. SMCGP is only concerned with facilitating transmission of game moves, not the identity of the players.  </p>
+<h1 id="rfc.section.4.3"><a href="#rfc.section.4.3">4.3.</a> <a href="#action-flags" id="action-flags">Action Flags</a></h1>
+<p id="rfc.section.4.3.p.1">The following types of action flags MUST be supported by any compliant client.  </p>
+<h1 id="rfc.section.4.3.1"><a href="#rfc.section.4.3.1">4.3.1.</a> <a href="#ch-challenge" id="ch-challenge">CH (Challenge)</a></h1>
+<p id="rfc.section.4.3.1.p.1">A challenge message indicates that the player is looking for a match. The message MUST be formatted as: </p>
+<pre>
+IDENTIFIER:CH:RATING:COLOR:COMMENTS
+</pre>
+<p><samp>RATING</samp> is the numeric FIDE rating of the player submitting the challenge. A player who is not FIDE rated, or who does not wish to play this match for a rating change, MUST transmit either <samp>UNR</samp>, or no characters at all in this field.  </p>
+<p><samp>COLOR</samp> is the color side the player making the challenge wishes to play. A client MUST use a single character for this field, either: </p>
+<p/>
+
+<ul>
+  <li><samp>W</samp> (white)</li>
+  <li><samp>B</samp> (black)</li>
+</ul>
+
+<p> </p>
+<p id="rfc.section.4.3.1.p.5">If the client making the request does not care what color they play, the client MUST still choose either W or B - the client MAY flip a coin or use another good source of entropy to select randomly.  </p>
+<h1 id="rfc.section.4.3.2"><a href="#rfc.section.4.3.2">4.3.2.</a> <a href="#ca-challenge-accepted" id="ca-challenge-accepted">CA (Challenge Accepted)</a></h1>
+<p id="rfc.section.4.3.2.p.1">A Challenge Accepted message is MUST be sent in reply to a CH message, indicating acceptance of the proposed match. A CA message MUST be formatted as: </p>
+<pre>
+IDENTIFIER:CA:NEWIDENTIFIER
+</pre>
+<p id="rfc.section.4.3.2.p.2">Where <samp>NEWIDENTIFIER</samp> is another randomly chosen identifier as laid out above.  </p>
+<h1 id="rfc.section.4.3.3"><a href="#rfc.section.4.3.3">4.3.3.</a> <a href="#aa-acceptance-acknowledged" id="aa-acceptance-acknowledged">AA (Acceptance Acknowledged)</a></h1>
+<p id="rfc.section.4.3.3.p.1">An Acceptance Acknowledge message MUST be sent in reply to a CA message, indicating reception of the new identifier. An AA message MUST be formatted as: </p>
+<pre>
+IDENTIFIER:AA:NEWIDENTIFIER
+</pre>
+<p id="rfc.section.4.3.3.p.2">Where <samp>IDENTIFIER</samp> is the old identifier, and <samp>NEWIDENTIFIER</samp> is the new identifier transmitted in the previous CA message.  </p>
+<p id="rfc.section.4.3.3.p.3">After transmitting a CA message, all further messages by either party MUST be transmitted with the newly chosen identifier. After the CA message and the first move has been taken, the game is considered to be <samp>ACTIVE</samp>.  </p>
+<h1 id="rfc.section.4.3.4"><a href="#rfc.section.4.3.4">4.3.4.</a> <a href="#mv-move" id="mv-move">MV (Move)</a></h1>
+<p id="rfc.section.4.3.4.p.1">A Move message indicates any valid move according to the laws of chess <a href="#LAW">[LAW]</a>.  </p>
+<p id="rfc.section.4.3.4.p.2">A MV message MUST be formatted as: </p>
+<pre>
+IDENTIFIER:MV:MOVETEXT
+</pre>
+<p id="rfc.section.4.3.4.p.3">Where <samp>MOVETEXT</samp> is further formatted as algebraic chess notation according to the FIDE Standard Algebraic Notation <a href="#LAW">[LAW]</a>.  </p>
+<p id="rfc.section.4.3.4.p.4">A MV message MUST only be sent in response to another MV message. If retransmission is required, a RT message, described in <a href="#rt-retransmit">Section 4.3.10</a> can be used.  </p>
+<p id="rfc.section.4.3.4.p.5">A MV message sent out of turn MUST be responded to with an ER message.  </p>
+<h1 id="rfc.section.4.3.5"><a href="#rfc.section.4.3.5">4.3.5.</a> <a href="#dr-draw-request" id="dr-draw-request">DR (Draw Request)</a></h1>
+<p id="rfc.section.4.3.5.p.1">A Draw Request message is a request to terminate the current game, awarding both players one half point and appropriate rating changes.  </p>
+<p id="rfc.section.4.3.5.p.2">A DR message may be sent in reply to any other message during an <samp>ACTIVE</samp> game.  </p>
+<p id="rfc.section.4.3.5.p.3">A DR message MUST be formatted as: </p>
+<pre>
+IDENTIFIER:DR
+</pre>
+<p id="rfc.section.4.3.5.p.4">A DR message MUST either be acknowledged with a DA message or a DD message.  </p>
+<h1 id="rfc.section.4.3.6"><a href="#rfc.section.4.3.6">4.3.6.</a> <a href="#da-draw-acknowledge" id="da-draw-acknowledge">DA (Draw Acknowledge)</a></h1>
+<p id="rfc.section.4.3.6.p.1">A Draw Acknowledge message MUST be sent only in reply to a corresponding DR message.  </p>
+<p id="rfc.section.4.3.6.p.2">A DA message must be formatted as: </p>
+<pre>
+IDENTIFIER:DA
+</pre>
+<p id="rfc.section.4.3.6.p.3">After a DA message has been sent, an identical message MUST be sent by the client who requested the draw, serving as a final confirmation.  </p>
+<p id="rfc.section.4.3.6.p.4">After this confirmation is sent, the game is considered <samp>INACTIVE</samp>. Both players are considered to have drawn the game.  </p>
+<h1 id="rfc.section.4.3.7"><a href="#rfc.section.4.3.7">4.3.7.</a> <a href="#dd-draw-decline" id="dd-draw-decline">DD (Draw Decline)</a></h1>
+<p id="rfc.section.4.3.7.p.1">A Draw Decline message MUST be sent only in reply to a corresponding DR message.  </p>
+<p id="rfc.section.4.3.7.p.2">A DD message MUST be formatted as: </p>
+<pre>
+IDENTIFIER:DR
+</pre>
+<p id="rfc.section.4.3.7.p.3">A client receiving a DD message MUST NOT send further draw messages until after another MV has been sent.  </p>
+<h1 id="rfc.section.4.3.8"><a href="#rfc.section.4.3.8">4.3.8.</a> <a href="#cc-concede" id="cc-concede">CC (Concede)</a></h1>
+<p id="rfc.section.4.3.8.p.1">A Concede message indicates that the sender of the message wishes to terminate the game immediately. The game is considered <samp>INACTIVE</samp> immediately after this message is sent, with no further requirements on the part of the transmitting party.  </p>
+<p id="rfc.section.4.3.8.p.2">A CC message must be formatted as: </p>
+<pre>
+IDENTIFIER:CC
+</pre>
+<p id="rfc.section.4.3.8.p.3">The receiving client SHOULD verify the concede message, but the sending client is under no obligation to respond.  </p>
+<p id="rfc.section.4.3.8.p.4">The sender of the CC message MUST be considered the loser of the game for scoring and ratings adjustment purposes.  </p>
+<p id="rfc.section.4.3.8.p.5">The physical equivalent would be getting up and walking away from the board.  </p>
+<h1 id="rfc.section.4.3.9"><a href="#rfc.section.4.3.9">4.3.9.</a> <a href="#er-error" id="er-error">ER (Error)</a></h1>
+<p id="rfc.section.4.3.9.p.1">An Error message indicates that the last received transmission could not be validly processed according to this protocol. It SHOULD be sent in response to, but not limited to, the following conditions: </p>
+<p/>
+
+<ul>
+  <li>A game move where no game has been set up</li>
+  <li>Any message with a missing or invalid identifier</li>
+  <li>An invalid (illegal) game move</li>
+</ul>
+
+<p> </p>
+<p id="rfc.section.4.3.9.p.3">An ER message MUST include a human-readable description of the error in the designated comments section.  </p>
+<p id="rfc.section.4.3.9.p.4">An ER message MUST be formatted as follows: </p>
+<pre>
+IDENTIFIER:ER:ERTYPE:MESSAGE
+</pre>
+<p id="rfc.section.4.3.9.p.5">In case the ER is in response to a missing or invalid identifier, the identifier used in the reply SHOULD be the same as the message it is in response to, even if invalid.  </p>
+<p id="rfc.section.4.3.9.p.6">If an ER message is recieved in response to another ER message, another ER message MUST NOT be sent.  </p>
+<h1 id="rfc.section.4.3.9.1"><a href="#rfc.section.4.3.9.1">4.3.9.1.</a> <a href="#error-types" id="error-types">Error Types</a></h1>
+<p id="rfc.section.4.3.9.1.p.1">A SMCGP-compliant client MUST be aware of the following classes of error.  </p>
+<h1 id="rfc.section.4.3.9.1.1"><a href="#rfc.section.4.3.9.1.1">4.3.9.1.1.</a> <a href="#mvil-move-illegal" id="mvil-move-illegal">MVIL (Move Illegal)</a></h1>
+<p id="rfc.section.4.3.9.1.1.p.1">A MVIL error indicates that the previously received MV message is invalid according to the laws of chess.  </p>
+<p id="rfc.section.4.3.9.1.1.p.2">The client receiving this error SHOULD send a RT action message in case the invalidity was caused by transmission problems.  </p>
+<p id="rfc.section.4.3.9.1.1.p.3">The client who sent the invalid move MUST send a valid move for the game to continue.  </p>
+<h1 id="rfc.section.4.3.9.1.2"><a href="#rfc.section.4.3.9.1.2">4.3.9.1.2.</a> <a href="#idil-id-illegal" id="idil-id-illegal">IDIL (ID Illegal)</a></h1>
+<p id="rfc.section.4.3.9.1.2.p.1">A IDIL error indicates that the client does not recognize the ID sent. This error SHOULD be used in cases where: </p>
+<p/>
+
+<ul>
+  <li>An ID is invalid according to this proposal</li>
+  <li>An ID transmitted conflicts with an ID already in use by the client</li>
+</ul>
+
+<p> </p>
+<h1 id="rfc.section.4.3.9.1.3"><a href="#rfc.section.4.3.9.1.3">4.3.9.1.3.</a> <a href="#msil-message-illegal" id="msil-message-illegal">MSIL (Message Illegal)</a></h1>
+<p id="rfc.section.4.3.9.1.3.p.1">A MSIL error indicates that the last message received was not validily formatted according to this proposal </p>
+<h1 id="rfc.section.4.3.9.1.4"><a href="#rfc.section.4.3.9.1.4">4.3.9.1.4.</a> <a href="#gsil-game-state-illegal" id="gsil-game-state-illegal">GSIL (Game State Illegal)</a></h1>
+<p id="rfc.section.4.3.9.1.4.p.1">A GSIL error indicates that a message is being rejected due to the state of the game, e.g. a MV after a CC, or a MV when it is not the transmitting player's turn.  </p>
+<h1 id="rfc.section.4.3.10"><a href="#rfc.section.4.3.10">4.3.10.</a> <a href="#rt-retransmit" id="rt-retransmit">RT (Retransmit)</a></h1>
+<p id="rfc.section.4.3.10.p.1">A Retransmit message indicates a desire for the recipient to resend its last communication. The receiving client MUST repeat its last transmission verbatim, with no changes.  </p>
+<p id="rfc.section.4.3.10.p.2">A RT message MUST be formatted as: </p>
+<pre>
+IDENTIFIER:RT
+</pre>
+<h1 id="rfc.section.4.3.11"><a href="#rfc.section.4.3.11">4.3.11.</a> <a href="#ki-kibitz" id="ki-kibitz">KI (Kibitz)</a></h1>
+<p id="rfc.section.4.3.11.p.1">A Kibitz message is simply player to player communication.  </p>
+<p id="rfc.section.4.3.11.p.2">A KI message MUST NOT be used to control the state of the game.  </p>
+<p id="rfc.section.4.3.11.p.3">A KI message MUST be formatted as follows: </p>
+<pre>
+IDENTIFIER:KI:MESSAGE
+</pre>
+<p id="rfc.section.4.3.11.p.4">A compliant client SHOULD show the MESSAGE to the recipient.  </p>
+<h1 id="rfc.section.4.4"><a href="#rfc.section.4.4">4.4.</a> <a href="#future-expansion" id="future-expansion">Future Expansion</a></h1>
+<p id="rfc.section.4.4.p.1">A client MAY implement their own action flags or error types, so long as they do not conflict with the basic format, or with any of the action flags laid out in this proposal.  </p>
+<h1 id="rfc.section.4.5"><a href="#rfc.section.4.5">4.5.</a> <a href="#example-session" id="example-session">Example Session</a></h1>
+<p id="rfc.section.4.5.p.1">What follows is a very short game using the proposed protocol: </p>
+<pre>
+ABCDE1:CH:W:UNR:Newbie looking for a game:
+ABCDE1:CA:TUVWX1:
+ABCDE1:AA:TUVWX1:
+TUVWX1:MV:1.f3:Good luck:
+TUVWX1:MV:e5:
+TUVWX1:MV:2.g4:
+TUVWX1:MV:Qh4#:Bad move:
+TUVWX1:KI:Ouch, should have seen that coming:
+</pre>
+<p id="rfc.section.4.5.p.2">Note that only the player playing White transmits the move number of the game (1. 2. etc.) - the Black player only transmits the move.  </p>
+<h1 id="rfc.references"><a href="#rfc.references">5.</a> Informative References</h1>
+<table>
+  <tbody>
+    <tr>
+      <td class="reference">
+        <b id="LAW">[LAW]</b>
+      </td>
+      <td class="top"><a>World Chess Federation (FIDE)</a>, "<a href="http://www.fide.com/component/handbook/?id=171&amp;view=article">Laws of Chess</a>", July 2014.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC2119">[RFC2119]</b>
+      </td>
+      <td class="top"><a>Bradner, S.</a>, "<a href="http://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>", BCP 14, RFC 2119, DOI 10.17487/RFC2119, March 1997.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC5741">[RFC5741]</b>
+      </td>
+      <td class="top"><a>Daigle, L.</a>, <a>Kolkman, O.</a> and <a>IAB</a>, "<a href="http://tools.ietf.org/html/rfc5741">RFC Streams, Headers, and Boilerplates</a>", RFC 5741, DOI 10.17487/RFC5741, December 2009.</td>
+    </tr>
+  </tbody>
+</table>
+<h1 id="rfc.authors">
+  <a href="#rfc.authors">Author's Address</a>
+</h1>
+<div class="avoidbreak">
+  <address class="vcard">
+	<span class="vcardline">
+	  <span class="fn">Michael Parks</span> 
+	  <span class="n hidden">
+		<span class="family-name">Parks</span>
+	  </span>
+	</span>
+	<span class="org vcardline">TKWare Enterpises</span>
+	<span class="adr">
+	  
+	  <span class="vcardline">
+		<span class="locality"></span> 
+		<span class="region"></span>
+		<span class="code"></span>
+	  </span>
+	  <span class="country-name vcardline"></span>
+	</span>
+	<span class="vcardline">Phone: +1 307 335 3132</span>
+
+<span class="vcardline">EMail: <a href="mailto:mparks@tkware.info">mparks@tkware.info</a></span>
+
+  </address>
+</div>
+
+</body>
+</html>
